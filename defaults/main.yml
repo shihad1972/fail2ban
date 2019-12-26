@@ -1,0 +1,9 @@
+---
+# defaults file for fail2ban
+
+fail2ban_services:
+  - name: slapd
+    logfile: /var/log/syslog
+  - name: postfix
+  - name: postfix-sasl
+  - name: dovecot

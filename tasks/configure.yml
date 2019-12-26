@@ -1,0 +1,22 @@
+---
+
+- name: Create fail2ban configuration files
+  become: true
+  template:
+    src: fail2ban.j2
+    dest: "/etc/fail2ban/jail.d/{{ item.name }}.conf"
+    owner: root
+    group: adm
+    mode: 0640
+  with_items: "{{ fail2ban_services }}"
+  notify: restart fail2ban
+
+- name: Add ignore IP / DNS name
+  become: true
+  lineinfile:
+    path: /etc/fail2ban/jail.conf
+    regexp: ^ignoreip
+    state: present
+    line: "ignoreip = 127.0.0.1/8 {{ f2b_ignore }}"
+  notify: restart fail2ban
+  when: f2b_ignore is defined

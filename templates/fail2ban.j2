@@ -1,0 +1,5 @@
+[{{ item.name }}]
+enabled = true
+{% if item.logfile is defined %}
+logpath = {{ item.logfile }}
+{% endif %}
