@@ -4,4 +4,4 @@
   become: true
   package:
     name: fail2ban
-    state: installed
+    state: present
