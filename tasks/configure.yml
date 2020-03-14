@@ -14,9 +14,28 @@
 - name: Add ignore IP / DNS name
   become: true
   lineinfile:
-    path: /etc/fail2ban/jail.conf
+    path: "{{ fail2ban_conf }}"
     regexp: ^ignoreip
+    insertafter: ^#ignoreip
     state: present
     line: "ignoreip = 127.0.0.1/8 {{ f2b_ignore }}"
   notify: restart fail2ban
   when: f2b_ignore is defined
+
+- name: Add bantime to jail.conf
+  become: true
+  lineinfile:
+    path: "{{ fail2ban_conf }}"
+    regexp: ^bantime
+    state: present
+    line: bantime = 1440m # 1 Day
+  notify: restart fail2ban
+
+- name: Add findtime to jail.conf
+  become: true
+  lineinfile:
+    path: "{{ fail2ban_conf }}"
+    regexp: ^findtime
+    state: present
+    line: findtime = 120 # 2 hours
+  notify: restart fail2ban

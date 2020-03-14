@@ -7,3 +7,5 @@ fail2ban_services:
   - name: postfix
   - name: postfix-sasl
   - name: dovecot
+
+fail2ban_conf: /etc/fail2ban/jail.conf
